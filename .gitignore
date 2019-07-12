@@ -1,3 +1,4 @@
+.haskell-code-explorer
 cabal.sandbox.config
 dist/
 *.ibc
