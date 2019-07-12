@@ -7,12 +7,7 @@ import Idris.ElabDecls
 import Idris.Main
 import Idris.ModeCommon
 import Idris.REPL
-
-import Idris.AbsSyntax
-import Idris.ElabDecls
-import Idris.Main
 import Idris.Options
-import IRTS.Compiler
 
 import IRTS.CodegenOCaml
 import IRTS.Compiler
