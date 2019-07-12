@@ -1,6 +1,8 @@
 {-# LANGUAGE PatternGuards #-}
 module IRTS.CodegenOCaml (codegenOCaml) where
 
+import Prelude hiding ((<>))
+
 import IRTS.CodegenCommon
 import IRTS.Lang hiding (lift)
 import IRTS.Simplified
@@ -193,9 +195,13 @@ magic :: Expr -> Expr
 magic e = parens (text "Obj.magic" <+> parens e)
 
 cgExp :: M.Map Name LDecl -> [Name] -> LExp -> Doc
-cgExp cs ns (LV (Glob n)) = cgN cs n
-cgExp cs ns (LV (Loc i)) = cgN cs (ns !! i)
-cgExp cs ns (LApp _ (LV (Glob n)) args) = cgCApp cs n (map (magic . cgExp cs ns) args)
+-- BEGIN DK
+-- DK: cgExp cs ns (LV (Glob n)) = cgN cs n
+cgExp cs ns (LV n) = cgN cs n
+-- DK: cgExp cs ns (LV (Loc i)) = cgN cs (ns !! i)
+-- DK: cgExp cs ns (LApp _ (LV (Glob n)) args) = cgCApp cs n (map (magic . cgExp cs ns) args)
+cgExp cs ns (LApp _ (LV n) args) = cgCApp cs n (map (magic . cgExp cs ns) args)
+-- END DK
 cgExp cs ns (LApp _ f args) = cgApp (cgExp cs ns f) (map (magic . cgExp cs ns) args)
 cgExp cs ns (LLazyApp n args) = cgApp (cgN cs n) (map (cgExp cs ns) args)
 cgExp cs ns (LLazyExp e) = text "lazy" <+> parens (cgExp cs ns e)

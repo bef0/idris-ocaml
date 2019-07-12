@@ -19,7 +19,7 @@ module Util.PrettyPrint
     )
     where
 
-
+import Prelude hiding ((<>))
 type Line = (String, String)  -- text, comment
 newtype Doc = Doc [Line]
 instance Show Doc where
